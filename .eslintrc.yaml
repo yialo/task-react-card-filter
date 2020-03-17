@@ -1,0 +1,1129 @@
+---
+env:
+  browser: true
+  es6: true
+overrides:
+  - env:
+      jest: true
+    files:
+      - ./**/*.spec.js
+      - ./**/*.test.js
+  - env:
+      node: true
+    files:
+      - ./config/**/*.js
+      - ./src/postcss/**/*.js
+    parser: espree
+    parserOptions:
+      ecmaFeatures:
+        jsx: true
+      ecmaVersion: 2019
+      sourceType: script
+    rules:
+      import/no-commonjs: 'off'
+      import/no-extraneous-dependencies: 'off'
+      import/no-nodejs-modules: 'off'
+    settings:
+      import/resolver: node
+parser: babel-eslint
+parserOptions:
+  allowImportExportEverywhere: false
+  sourceType: module
+plugins:
+  - babel
+  - import
+  - jsx-a11y
+  - promise
+  - react
+  - react-hooks
+rules:
+  accessor-pairs: 'off'
+  array-bracket-newline:
+    - error
+    - multiline: true
+  array-bracket-spacing:
+    - error
+    - never
+  array-callback-return:
+    - error
+    - allowImplicit: true
+  array-element-newline:
+    - error
+    - consistent
+  arrow-body-style: 'off'
+  arrow-parens:
+    - error
+    - always
+  arrow-spacing:
+    - error
+    - after: true
+      before: true
+  babel/semi: error
+  block-scoped-var: error
+  block-spacing:
+    - error
+    - always
+  brace-style:
+    - error
+    - 1tbs
+    - allowSingleLine: true
+  camelcase:
+    - error
+    - ignoreDestructuring: false
+      ignoreImports: false
+      properties: never
+  capitalized-comments: 'off'
+  class-methods-use-this: 'off'
+  comma-dangle:
+    - error
+    - arrays: always-multiline
+      exports: always-multiline
+      functions: only-multiline
+      imports: always-multiline
+      objects: always-multiline
+  comma-spacing:
+    - error
+    - after: true
+      before: false
+  comma-style:
+    - error
+    - last
+    - exceptions:
+        ArrayExpression: false
+        ArrayPattern: false
+        ArrowFunctionExpression: false
+        CallExpression: false
+        FunctionDeclaration: false
+        FunctionExpression: false
+        ImportDeclaration: false
+        NewExpression: false
+        ObjectExpression: false
+        ObjectPattern: false
+        VariableDeclaration: false
+  complexity:
+    - error
+    - max: 10
+  computed-property-spacing:
+    - error
+    - never
+  consistent-return: 'off'
+  consistent-this: 'off'
+  constructor-super: error
+  curly:
+    - error
+    - multi-line
+  default-case:
+    - error
+    - commentPattern: ^no default$
+  default-param-last: error
+  dot-notation:
+    - error
+    - allowKeywords: true
+  eol-last:
+    - error
+    - always
+  eqeqeq:
+    - error
+    - always
+    - 'null': ignore
+  for-direction: error
+  func-call-spacing:
+    - error
+    - never
+  func-name-matching: 'off'
+  func-names: 'off'
+  func-style: 'off'
+  function-paren-newline:
+    - error
+    - consistent
+  generator-star-spacing:
+    - error
+    - after: true
+      before: false
+  getter-return:
+    - error
+    - allowImplicit: true
+  global-require: 'off'
+  grouped-accessor-pairs:
+    - error
+    - getBeforeSet
+  guard-for-in: error
+  id-blacklist: 'off'
+  id-length: 'off'
+  id-match: 'off'
+  implicit-arrow-linebreak:
+    - error
+    - beside
+  import/default: error
+  import/dynamic-import-chunkname: 'off'
+  import/export: error
+  import/exports-last: 'off'
+  import/extensions:
+    - error
+    - ignorePackages
+  import/first: error
+  import/group-exports: 'off'
+  import/max-dependencies: 'off'
+  import/named: error
+  import/namespace: error
+  import/newline-after-import: error
+  import/no-absolute-path: error
+  import/no-amd: error
+  import/no-anonymous-default-export: 'off'
+  import/no-commonjs:
+    - error
+    - allowConditionalRequire: false
+      allowPrimitiveModules: false
+      allowRequire: false
+  import/no-cycle: error
+  import/no-default-export: 'off'
+  import/no-deprecated: error
+  import/no-duplicates:
+    - error
+    - considerQueryString: true
+  import/no-dynamic-require: 'off'
+  import/no-extraneous-dependencies:
+    - error
+    - bundledDependencies: false
+      devDependencies: false
+      optionalDependencies: false
+      peerDependencies: false
+  import/no-internal-modules: 'off'
+  import/no-mutable-exports: error
+  import/no-named-as-default: error
+  import/no-named-as-default-member: error
+  import/no-named-default: error
+  import/no-named-export: 'off'
+  import/no-namespace: 'off'
+  import/no-nodejs-modules: error
+  import/no-relative-parent-imports: 'off'
+  import/no-restricted-paths: 'off'
+  import/no-self-import: error
+  import/no-unassigned-import:
+    - error
+    - allow:
+      - '**/*.{css,ico,jp?(e)g,png,svg,woff2}'
+      - '**/*.test.js'
+  import/no-unresolved:
+    - error
+    - amd: false
+      caseSensitive: true
+      commonjs: true
+  import/no-unused-modules: 'off'
+  import/no-useless-path-segments:
+    - error
+    - commonjs: true
+      noUselessIndex: false
+  import/no-webpack-loader-syntax: error
+  import/order: 'off'
+  import/prefer-default-export: 'off'
+  import/unambiguous: 'off'
+  indent:
+    - error
+    - 2
+    - ArrayExpression: 1
+      CallExpression:
+        arguments: 2
+      FunctionDeclaration:
+        body: 1
+        parameters: 1
+      FunctionExpression:
+        body: 1
+        parameters: 1
+      ImportDeclaration: 1
+      ObjectExpression: 1
+      SwitchCase: 1
+      VariableDeclarator: 1
+      flatTernaryExpressions: false
+      ignoreComments: false
+      outerIIFEBody: 1
+  init-declarations: 'off'
+  jsx-a11y/accessible-emoji: error
+  jsx-a11y/alt-text:
+    - error
+    - elements:
+        - img
+        - object
+        - area
+        - 'input[type="image"]'
+  jsx-a11y/anchor-has-content: error
+  jsx-a11y/anchor-is-valid:
+    - error
+    - aspects:
+        - noHref
+        - invalidHref
+        - preferButton
+  jsx-a11y/aria-activedescendant-has-tabindex: error
+  jsx-a11y/aria-props: error
+  jsx-a11y/aria-proptypes: error
+  jsx-a11y/aria-role:
+    - error
+    - ignoreNonDom: false
+  jsx-a11y/aria-unsupported-elements: error
+  jsx-a11y/autocomplete-valid: 'off'
+  jsx-a11y/click-events-have-key-events: error
+  jsx-a11y/control-has-associated-label:
+    - error
+    - depth: 5
+      ignoreElements:
+        - audio
+        - canvas
+        - embed
+        - input
+        - textarea
+        - tr
+        - video
+      ignoreRoles:
+        - grid
+        - listbox
+        - menu
+        - menubar
+        - radiogroup
+        - row
+        - tablist
+        - toolbar
+        - tree
+        - treegrid
+      labelAttributes:
+        - label
+  jsx-a11y/heading-has-content: error
+  jsx-a11y/html-has-lang: error
+  jsx-a11y/iframe-has-title: error
+  jsx-a11y/img-redundant-alt: error
+  jsx-a11y/interactive-supports-focus: error
+  jsx-a11y/label-has-associated-control:
+    - error
+    - assert: either
+      depth: 25
+  jsx-a11y/lang: error
+  jsx-a11y/media-has-caption: error
+  jsx-a11y/mouse-events-have-key-events: error
+  jsx-a11y/no-access-key: error
+  jsx-a11y/no-autofocus:
+    - error
+    - ignoreNonDOM: true
+  jsx-a11y/no-distracting-elements:
+    - error
+    - elements:
+        - marquee
+        - blink
+  jsx-a11y/no-interactive-element-to-noninteractive-role:
+    - error
+    - tr:
+        - none
+        - presentation
+  jsx-a11y/no-noninteractive-element-interactions:
+    - error
+    - handlers:
+        - onClick
+        - onMouseDown
+        - onMouseUp
+        - onKeyPress
+        - onKeyDown
+        - onKeyUp
+  jsx-a11y/no-noninteractive-element-to-interactive-role:
+    - error
+    - li:
+        - menuitem
+        - option
+        - row
+        - tab
+        - treeitem
+      ol:
+        - listbox
+        - menu
+        - menubar
+        - radiogroup
+        - tablist
+        - tree
+        - treegrid
+      table:
+        - grid
+      td:
+        - gridcell
+      ul:
+        - listbox
+        - menu
+        - menubar
+        - radiogroup
+        - tablist
+        - tree
+        - treegrid
+  jsx-a11y/no-noninteractive-tabindex:
+    - error
+    - roles:
+        - tabpanel
+  jsx-a11y/no-onchange: error
+  jsx-a11y/no-redundant-roles: error
+  jsx-a11y/no-static-element-interactions:
+    - error
+    - handlers:
+        - onClick
+        - onMouseDown
+        - onMouseUp
+        - onKeyPress
+        - onKeyDown
+        - onKeyUp
+  jsx-a11y/role-has-required-aria-props: error
+  jsx-a11y/role-supports-aria-props: error
+  jsx-a11y/scope: error
+  jsx-a11y/tabindex-no-positive: error
+  jsx-quotes:
+    - error
+    - prefer-double
+  key-spacing:
+    - error
+    - afterColon: true
+      beforeColon: false
+  keyword-spacing:
+    - error
+    - after: true
+      before: true
+      overrides:
+        case:
+          after: true
+        return:
+          after: true
+        throw:
+          after: true
+  line-comment-position: 'off'
+  linebreak-style:
+    - error
+    - unix
+  lines-around-comment: 'off'
+  lines-between-class-members:
+    - error
+    - always
+    - exceptAfterSingleLine: true
+  max-classes-per-file:
+    - error
+    - 1
+  max-depth: 'off'
+  max-len:
+    - error
+    - code: 100
+      ignoreComments: true
+      ignoreRegExpLiterals: true
+      ignoreStrings: true
+      ignoreTemplateLiterals: true
+      ignoreUrls: true
+  max-lines: 'off'
+  max-lines-per-function: 'off'
+  max-nested-callbacks: 'off'
+  max-params: 'off'
+  max-statements: 'off'
+  max-statements-per-line:
+    - error
+    - max: 1
+  multiline-comment-style: 'off'
+  multiline-ternary: 'off'
+  new-cap:
+    - error
+    - capIsNew: false
+      newIsCap: true
+  new-parens: error
+  newline-per-chained-call:
+    - error
+    - ignoreChainWithDepth: 4
+  no-alert: warn
+  no-array-constructor: error
+  no-async-promise-executor: error
+  no-await-in-loop: error
+  no-bitwise: error
+  no-caller: error
+  no-case-declarations: error
+  no-class-assign: error
+  no-compare-neg-zero: error
+  no-cond-assign:
+    - error
+    - always
+  no-confusing-arrow:
+    - error
+    - allowParens: true
+  no-console: 'off'
+  no-const-assign: error
+  no-constant-condition: warn
+  no-constructor-return: error
+  no-continue: error
+  no-control-regex: error
+  no-debugger: 'off'
+  no-delete-var: error
+  no-div-regex: 'off'
+  no-dupe-args: error
+  no-dupe-class-members: error
+  no-dupe-else-if: error
+  no-dupe-keys: error
+  no-duplicate-case: error
+  no-duplicate-imports: 'off'
+  no-else-return:
+    - error
+    - allowElseIf: false
+  no-empty: error
+  no-empty-character-class: error
+  no-empty-function:
+    - error
+    - allow:
+        - arrowFunctions
+        - functions
+        - methods
+  no-empty-pattern: error
+  no-eq-null: 'off'
+  no-eval: error
+  no-ex-assign: error
+  no-extend-native: error
+  no-extra-bind: error
+  no-extra-boolean-cast: error
+  no-extra-label: error
+  no-extra-parens: 'off'
+  no-extra-semi: error
+  no-fallthrough: error
+  no-floating-decimal: error
+  no-func-assign: error
+  no-global-assign: error
+  no-implicit-coercion: 'off'
+  no-implicit-globals: 'off'
+  no-implied-eval: error
+  no-inline-comments: 'off'
+  no-inner-declarations: error
+  no-invalid-regexp: error
+  no-invalid-this: 'off'
+  no-irregular-whitespace: error
+  no-iterator: error
+  no-label-var: error
+  no-labels:
+    - error
+    - allowLoop: false
+      allowSwitch: false
+  no-lone-blocks: error
+  no-lonely-if: error
+  no-loop-func: error
+  no-magic-numbers: 'off'
+  no-misleading-character-class: error
+  no-mixed-operators:
+    - error
+    - allowSamePrecedence: false
+      groups:
+        - - '%'
+          - '**'
+        - - '%'
+          - +
+        - - '%'
+          - '-'
+        - - '%'
+          - '*'
+        - - '%'
+          - /
+        - - /
+          - '*'
+        - - '&'
+          - '|'
+          - '<<'
+          - '>>'
+          - '>>>'
+        - - ==
+          - '!='
+          - ===
+          - '!=='
+        - - '&&'
+          - '||'
+  no-mixed-spaces-and-tabs: error
+  no-multi-assign: error
+  no-multi-spaces:
+    - error
+    - ignoreEOLComments: false
+  no-multi-str: error
+  no-multiple-empty-lines:
+    - error
+    - max: 2
+      maxBOF: 0
+      maxEOF: 0
+  no-negated-condition: error
+  no-nested-ternary: error
+  no-new: error
+  no-new-func: error
+  no-new-object: error
+  no-new-symbol: error
+  no-new-wrappers: error
+  no-obj-calls: error
+  no-octal: error
+  no-octal-escape: error
+  no-param-reassign:
+    - error
+    - props: false
+  no-plusplus:
+    - error
+    - allowForLoopAfterthoughts: true
+  no-proto: error
+  no-prototype-builtins: error
+  no-redeclare: error
+  no-regex-spaces: error
+  no-restricted-globals:
+    - error
+    - isFinite
+    - isNaN
+    - addEventListener
+    - blur
+    - close
+    - closed
+    - confirm
+    - defaultStatus
+    - defaultstatus
+    - event
+    - external
+    - find
+    - focus
+    - frameElement
+    - frames
+    - history
+    - innerHeight
+    - innerWidth
+    - length
+    - location
+    - locationbar
+    - menubar
+    - moveBy
+    - moveTo
+    - name
+    - onblur
+    - onerror
+    - onfocus
+    - onload
+    - onresize
+    - onunload
+    - open
+    - opener
+    - opera
+    - outerHeight
+    - outerWidth
+    - pageXOffset
+    - pageYOffset
+    - parent
+    - print
+    - removeEventListener
+    - resizeBy
+    - resizeTo
+    - screen
+    - screenLeft
+    - screenTop
+    - screenX
+    - screenY
+    - scroll
+    - scrollbars
+    - scrollBy
+    - scrollTo
+    - scrollX
+    - scrollY
+    - self
+    - status
+    - statusbar
+    - stop
+    - toolbar
+    - top
+  no-restricted-imports: 'off'
+  no-restricted-properties:
+    - error
+    - message: arguments.callee is deprecated
+      object: arguments
+      property: callee
+    - message: Please use Number.isFinite instead
+      object: global
+      property: isFinite
+    - message: Please use Number.isFinite instead
+      object: self
+      property: isFinite
+    - message: Please use Number.isFinite instead
+      object: window
+      property: isFinite
+    - message: Please use Number.isNaN instead
+      object: global
+      property: isNaN
+    - message: Please use Number.isNaN instead
+      object: self
+      property: isNaN
+    - message: Please use Number.isNaN instead
+      object: window
+      property: isNaN
+    - message: Please use Object.defineProperty instead.
+      property: __defineGetter__
+    - message: Please use Object.defineProperty instead.
+      property: __defineSetter__
+    - message: Use the exponentiation operator (**) instead.
+      object: Math
+      property: pow
+  no-restricted-syntax:
+    - error
+    - message: Labels are a form of GOTO; using them makes code confusing and hard to maintain and understand.
+      selector: LabeledStatement
+    - message: '`with` is disallowed in strict mode because it makes code impossible to predict and optimize.'
+      selector: WithStatement
+  no-return-assign:
+    - error
+    - always
+  no-return-await: error
+  no-script-url: error
+  no-self-assign:
+    - error
+    - props: false
+  no-self-compare: error
+  no-sequences: error
+  no-setter-return: error
+  no-shadow: error
+  no-shadow-restricted-names: error
+  no-sparse-arrays: error
+  no-tabs: error
+  no-template-curly-in-string: error
+  no-ternary: 'off'
+  no-this-before-super: error
+  no-throw-literal: error
+  no-trailing-spaces:
+    - error
+    - ignoreComments: false
+      skipBlankLines: false
+  no-undef: error
+  no-undef-init: error
+  no-undefined: 'off'
+  no-underscore-dangle: 'off'
+  no-unexpected-multiline: error
+  no-unmodified-loop-condition: 'off'
+  no-unneeded-ternary:
+    - error
+    - defaultAssignment: false
+  no-unreachable: error
+  no-unsafe-finally: error
+  no-unsafe-negation: error
+  no-unused-expressions:
+    - error
+    - allowShortCircuit: false
+      allowTaggedTemplates: false
+      allowTernary: false
+  no-unused-labels: error
+  no-unused-vars:
+    - error
+    - args: after-used
+      ignoreRestSiblings: true
+      vars: all
+  no-use-before-define:
+    - error
+    - classes: true
+      functions: true
+      variables: false
+  no-useless-call: 'off'
+  no-useless-catch: error
+  no-useless-computed-key: error
+  no-useless-concat: error
+  no-useless-constructor: error
+  no-useless-escape: error
+  no-useless-rename:
+    - error
+    - ignoreDestructuring: false
+      ignoreExport: false
+      ignoreImport: false
+  no-useless-return: error
+  no-var: error
+  no-void: 'off'
+  no-warning-comments: 'off'
+  no-whitespace-before-property: error
+  no-with: error
+  nonblock-statement-body-position:
+    - error
+    - beside
+  object-curly-newline:
+    - error
+    - consistent: true
+      multiline: true
+  object-curly-spacing:
+    - error
+    - always
+  object-property-newline:
+    - error
+    - allowAllPropertiesOnSameLine: true
+  object-shorthand:
+    - error
+    - always
+    - avoidQuotes: true
+      ignoreConstructors: false
+  one-var:
+    - error
+    - never
+  one-var-declaration-per-line:
+    - error
+    - always
+  operator-assignment:
+    - error
+    - always
+  operator-linebreak:
+    - error
+    - before
+    - overrides:
+        =: none
+  padded-blocks:
+    - error
+    - blocks: never
+      classes: never
+      switches: never
+  padding-line-between-statements: 'off'
+  prefer-arrow-callback:
+    - error
+    - allowNamedFunctions: false
+      allowUnboundThis: true
+  prefer-const:
+    - error
+    - destructuring: any
+      ignoreReadBeforeAssign: true
+  prefer-destructuring:
+    - error
+    - AssignmentExpression:
+        array: true
+        object: true
+      VariableDeclarator:
+        array: false
+        object: true
+    - enforceForRenamedProperties: false
+  prefer-exponentiation-operator: error
+  prefer-named-capture-group: 'off'
+  prefer-numeric-literals: error
+  prefer-object-spread: error
+  prefer-promise-reject-errors:
+    - error
+    - allowEmptyReject: true
+  prefer-rest-params: error
+  prefer-spread: error
+  prefer-template: error
+  promise/always-return: 'off'
+  promise/avoid-new: 'off'
+  promise/catch-or-return:
+    - error
+    - allowFinally: true
+  promise/no-callback-in-promise: 'off'
+  promise/no-native: 'off'
+  promise/no-nesting: error
+  promise/no-new-statics: error
+  promise/no-promise-in-callback: 'off'
+  promise/no-return-in-finally: error
+  promise/no-return-wrap: error
+  promise/param-names: error
+  promise/prefer-await-to-callbacks: 'off'
+  promise/prefer-await-to-then: 'off'
+  promise/valid-params: error
+  quote-props:
+    - error
+    - consistent
+  quotes:
+    - error
+    - single
+    - allowTemplateLiterals: true
+  radix: error
+  react-hooks/exhaustive-deps: 'off'
+  react-hooks/rules-of-hooks: error
+  react/boolean-prop-naming: 'off'
+  react/button-has-type: 'off'
+  react/default-props-match-prop-types:
+    - error
+    - allowRequiredDefaults: false
+  react/destructuring-assignment: 'off'
+  react/display-name: 'off'
+  react/forbid-component-props: 'off'
+  react/forbid-dom-props: 'off'
+  react/forbid-elements: 'off'
+  react/forbid-foreign-prop-types:
+    - warn
+    - allowInPropTypes: true
+  react/forbid-prop-types:
+    - error
+    - checkChildContextTypes: true
+      checkContextTypes: true
+      forbid:
+        - any
+        - array
+        - object
+  react/function-component-definition: 'off'
+  react/jsx-boolean-value:
+    - error
+    - never
+  react/jsx-child-element-spacing: error
+  react/jsx-closing-bracket-location:
+    - error
+    - line-aligned
+  react/jsx-closing-tag-location: error
+  react/jsx-curly-brace-presence:
+    - error
+    - children: never
+      props: never
+  react/jsx-curly-newline:
+    - error
+    - multiline: consistent
+      singleline: consistent
+  react/jsx-curly-spacing:
+    - error
+    - when: never
+      children: true
+      allowMultiline: true
+  react/jsx-equals-spacing:
+    - error
+    - never
+  react/jsx-filename-extension:
+    - error
+    - extensions:
+        - .jsx
+  react/jsx-first-prop-new-line:
+    - error
+    - multiline-multiprop
+  react/jsx-fragments:
+    - error
+    - element
+  react/jsx-handler-names: 'off'
+  react/jsx-indent:
+    - error
+    - 2
+  react/jsx-indent-props:
+    - error
+    - 2
+  react/jsx-key:
+    - error
+    - checkFragmentShorthand: true
+  react/jsx-max-depth: 'off'
+  react/jsx-max-props-per-line:
+    - error
+    - maximum: 1
+      when: multiline
+  react/jsx-no-bind:
+    - error
+    - allowArrowFunctions: true
+      allowBind: false
+      allowFunctions: false
+      ignoreDOMComponents: true
+      ignoreRefs: true
+  react/jsx-no-comment-textnodes: error
+  react/jsx-no-duplicate-props:
+    - error
+    - ignoreCase: true
+  react/jsx-no-literals: 'off'
+  react/jsx-no-script-url: error
+  react/jsx-no-target-blank:
+    - error
+    - enforceDynamicLinks: always
+  react/jsx-no-undef: error
+  react/jsx-no-useless-fragment: error
+  react/jsx-one-expression-per-line:
+    - error
+    - allow: single-child
+  react/jsx-pascal-case:
+    - error
+    - allowAllCaps: true
+  react/jsx-props-no-multi-spaces: error
+  react/jsx-props-no-spreading: 'off'
+  react/jsx-sort-default-props: 'off'
+  react/jsx-sort-props: 'off'
+  react/jsx-tag-spacing:
+    - error
+    - afterOpening: never
+      beforeClosing: never
+      beforeSelfClosing: always
+      closingSlash: never
+  react/jsx-uses-react: error
+  react/jsx-uses-vars: error
+  react/jsx-wrap-multilines:
+    - error
+    - arrow: parens-new-line
+      assignment: parens-new-line
+      condition: parens-new-line
+      declaration: parens-new-line
+      logical: parens-new-line
+      prop: parens-new-line
+      return: parens-new-line
+  react/no-access-state-in-setstate: error
+  react/no-adjacent-inline-elements: 'off'
+  react/no-array-index-key: 'off'
+  react/no-children-prop: error
+  react/no-danger: warn
+  react/no-danger-with-children: error
+  react/no-deprecated: error
+  react/no-did-mount-set-state: 'off'
+  react/no-did-update-set-state: 'off'
+  react/no-direct-mutation-state: error
+  react/no-find-dom-node: error
+  react/no-is-mounted: error
+  react/no-multi-comp: 'off'
+  react/no-redundant-should-component-update: error
+  react/no-render-return-value: error
+  react/no-set-state: 'off'
+  react/no-string-refs: error
+  react/no-this-in-sfc: error
+  react/no-typos: error
+  react/no-unescaped-entities: error
+  react/no-unknown-property: error
+  react/no-unsafe: error
+  react/no-unused-prop-types:
+    - error
+    - skipShapeProps: true
+  react/no-unused-state: error
+  react/no-will-update-set-state: error
+  react/prefer-es6-class:
+    - error
+    - always
+  react/prefer-read-only-props: 'off'
+  react/prefer-stateless-function:
+    - error
+    - ignorePureComponents: true
+  react/prop-types:
+    - error
+    - skipUndeclared: false
+  react/react-in-jsx-scope: error
+  react/require-default-props:
+    - error
+    - forbidDefaultForRequired: true
+  react/require-optimization: 'off'
+  react/require-render-return: error
+  react/self-closing-comp: error
+  react/sort-comp:
+    - error
+    - groups:
+        lifecycle:
+          - displayName
+          - propTypes
+          - contextTypes
+          - childContextTypes
+          - mixins
+          - statics
+          - defaultProps
+          - constructor
+          - getDefaultProps
+          - getInitialState
+          - state
+          - getChildContext
+          - getDerivedStateFromProps
+          - componentWillMount
+          - UNSAFE_componentWillMount
+          - componentDidMount
+          - componentWillReceiveProps
+          - UNSAFE_componentWillReceiveProps
+          - shouldComponentUpdate
+          - componentWillUpdate
+          - UNSAFE_componentWillUpdate
+          - getSnapshotBeforeUpdate
+          - componentDidUpdate
+          - componentDidCatch
+          - componentWillUnmount
+        rendering:
+          - /^render.+$/
+          - render
+      order:
+        - static-variables
+        - static-methods
+        - instance-variables
+        - lifecycle
+        - /^on.+$/
+        - getters
+        - setters
+        - /^(get|set)(?!(InitialState$|DefaultProps$|ChildContext$)).+$/
+        - instance-methods
+        - everything-else
+        - rendering
+  react/sort-prop-types: 'off'
+  react/state-in-constructor:
+    - error
+    - never
+  react/static-property-placement:
+    - error
+    - static public field
+  react/style-prop-object: error
+  react/void-dom-elements-no-children: error
+  require-atomic-updates: 'off'
+  require-await: error
+  require-unicode-regexp: 'off'
+  require-yield: error
+  rest-spread-spacing:
+    - error
+    - never
+  semi: 'off'
+  semi-spacing:
+    - error
+    - after: true
+      before: false
+  semi-style:
+    - error
+    - last
+  sort-imports: 'off'
+  sort-keys: 'off'
+  sort-vars: 'off'
+  space-before-blocks: error
+  space-before-function-paren:
+    - error
+    - anonymous: always
+      asyncArrow: always
+      named: never
+  space-in-parens:
+    - error
+    - never
+  space-infix-ops: error
+  space-unary-ops:
+    - error
+    - nonwords: false
+      words: true
+  spaced-comment:
+    - error
+    - always
+    - block:
+        balanced: true
+        exceptions:
+          - '-'
+          - +
+        markers:
+          - =
+          - '!'
+          - ':'
+          - '::'
+      line:
+        exceptions:
+          - '-'
+          - +
+        markers:
+          - =
+          - '!'
+  strict:
+    - error
+    - safe
+  switch-colon-spacing:
+    - error
+    - after: true
+      before: false
+  symbol-description: error
+  template-curly-spacing:
+    - error
+    - never
+  template-tag-spacing:
+    - error
+    - never
+  unicode-bom:
+    - error
+    - never
+  use-isnan: error
+  valid-typeof:
+    - error
+    - requireStringLiterals: true
+  vars-on-top: error
+  wrap-iife:
+    - error
+    - outside
+    - functionPrototypeMethods: false
+  wrap-regex: 'off'
+  yield-star-spacing:
+    - error
+    - after
+  yoda: error
+settings:
+  import/extensions:
+    - .js
+    - .jsx
+    - .ts
+    - .tsx
+  import/ignore:
+    - node_modules
+    - \\.(css|json)$
+  import/resolver:
+    webpack:
+      config: ./config/webpack.config.js
+      env:
+        purpose: development
+  react:
+    version: 'detect'
