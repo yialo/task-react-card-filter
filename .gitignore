@@ -12,4 +12,5 @@ bash.exe.stackdump
 
 # msc
 /dist/
+/extra/
 /tests/
