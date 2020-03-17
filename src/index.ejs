@@ -4,8 +4,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>React card filter</title>
+    <% [400, 700].forEach((size) => { %>
+      <link rel="preload" href="<%= require(`./fonts/source-sans-pro_${size}_normal.woff2`).default %>" as="font" crossorigin>
+    <% }); %>
   </head>
-  <body>
 
+  <body>
+    <div id="root"></div>
   </body>
 </html>
