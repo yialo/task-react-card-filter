@@ -64,7 +64,7 @@ module.exports = (env = {}) => {
           hot: true,
           inline: true,
           overlay: true,
-          writeToDisk: true,
+          writeToDisk: false,
         });
       }
       return config;
@@ -204,7 +204,9 @@ module.exports = (env = {}) => {
     plugins: (() => {
       const output = [
         new CaseSensitivePathsPlugin(),
-        new CleanWebpackPlugin(),
+        new CleanWebpackPlugin({
+          cleanStaleWebpackAssets: false,
+        }),
         new DefinePlugin({
           'publicPath': JSON.stringify(publicPath),
         }),
