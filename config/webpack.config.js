@@ -34,7 +34,7 @@ module.exports = (env = {}) => {
   const distPath = path.join(rootPath, needDeploy ? 'docs' : 'dist');
   const srcPath = path.join(rootPath, 'src');
 
-  const pathEnum = {
+  const Path = {
     CONFIG: configPath,
     DIST: distPath,
     SRC: srcPath,
@@ -50,10 +50,10 @@ module.exports = (env = {}) => {
     '@': srcPath,
   };
 
-  dotEnv.config({ path: pathEnum.LOCAL_ENV_FILE });
+  dotEnv.config({ path: Path.LOCAL_ENV_FILE });
 
   return {
-    context: pathEnum.SRC,
+    context: Path.SRC,
 
     devServer: (() => {
       const config = {};
@@ -64,7 +64,7 @@ module.exports = (env = {}) => {
           hot: true,
           inline: true,
           overlay: true,
-          writeToDisk: false,
+          writeToDisk: (filePath) => !filePath.match(/\.hot-update\.js(?:on|\.map)?$/),
         });
       }
       return config;
@@ -73,7 +73,7 @@ module.exports = (env = {}) => {
     devtool: isDevelopment ? 'eval-source-map' : false,
 
     entry: {
-      'app': pathEnum.SRC,
+      'app': Path.SRC,
     },
 
     mode: (isDevelopment || isProduction) ? purpose : 'none',
@@ -82,18 +82,17 @@ module.exports = (env = {}) => {
       rules: (() => {
         const scriptLoaderRule = {
           test: /\.jsx?$/,
-          exclude: '/node_modules/',
           loader: 'babel-loader',
           options: {
-            configFile: pathEnum.BABEL_CONFIG,
+            configFile: Path.BABEL_CONFIG,
           },
         };
 
         const styleLoaderRule = {
           test: /\.css$/,
-          exclude: '/node_modules/',
           use: [
-            (isProduction ? CssExtractPlugin.loader : 'style-loader'),
+            // (isProduction ? CssExtractPlugin.loader : 'style-loader'),
+            CssExtractPlugin.loader,
             {
               loader: 'css-loader',
               options: {
@@ -109,11 +108,16 @@ module.exports = (env = {}) => {
                   ctx: {
                     pathAliasEnum: aliasEnum,
                   },
-                  path: pathEnum.CONFIG,
+                  path: Path.CONFIG,
                 },
               },
             },
           ],
+        };
+
+        const templateLoader = {
+          test: /\.ejs$/,
+          loader: 'ejs-loader',
         };
 
         const getFileLoaderRule = ({ testRegexp, outputSubdir }) => ({
@@ -128,6 +132,7 @@ module.exports = (env = {}) => {
         return [
           scriptLoaderRule,
           styleLoaderRule,
+          templateLoader,
           getFileLoaderRule({
             testRegexp: /\.(jpe?g|png|svg)$/,
             outputSubdir: 'img',
@@ -197,7 +202,7 @@ module.exports = (env = {}) => {
 
     output: {
       filename: `assets/js/[name]${assetHash}.js`,
-      path: pathEnum.DIST,
+      path: Path.DIST,
       publicPath,
     },
 
@@ -216,7 +221,7 @@ module.exports = (env = {}) => {
         }),
         new HtmlPlugin({
           filename: 'index.html',
-          template: pathEnum.HTML_TEMPLATE,
+          template: Path.HTML_TEMPLATE,
         }),
       ];
 
