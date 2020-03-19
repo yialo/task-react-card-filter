@@ -91,8 +91,21 @@ module.exports = (env = {}) => {
         const styleLoaderRule = {
           test: /\.css$/,
           use: [
-            // (isProduction ? CssExtractPlugin.loader : 'style-loader'),
-            CssExtractPlugin.loader,
+            // isProduction ? ({
+            //   loader: CssExtractPlugin.loader,
+            //   options: {
+            //     hmr: true,
+            //     reloadAll: true,
+            //   },
+            // }) : 'style-loader',
+            {
+              loader: CssExtractPlugin.loader,
+              options: {
+                hmr: true,
+                reloadAll: true,
+                publicPath: '/',
+              },
+            },
             {
               loader: 'css-loader',
               options: {
@@ -146,7 +159,7 @@ module.exports = (env = {}) => {
     },
 
     optimization: (() => {
-      const output = {
+      const config = {
         noEmitOnErrors: true,
         splitChunks: {
           chunks: 'all',
@@ -163,7 +176,7 @@ module.exports = (env = {}) => {
       };
 
       if (isProduction) {
-        output.minimizer = [
+        config.minimizer = [
           new TerserPlugin({
             extractComments: false,
             terserOptions: {
@@ -196,8 +209,7 @@ module.exports = (env = {}) => {
           }),
         ];
       }
-
-      return output;
+      return config;
     })(),
 
     output: {
@@ -207,7 +219,7 @@ module.exports = (env = {}) => {
     },
 
     plugins: (() => {
-      const output = [
+      const pluginList = [
         new CaseSensitivePathsPlugin(),
         new CleanWebpackPlugin({
           cleanStaleWebpackAssets: false,
@@ -226,12 +238,11 @@ module.exports = (env = {}) => {
       ];
 
       if (needAnalyze) {
-        output.push(new BundleAnalyzerPlugin({
+        pluginList.push(new BundleAnalyzerPlugin({
           analyzerPort: 8889,
         }));
       }
-
-      return output;
+      return pluginList;
     })(),
 
     resolve: {
