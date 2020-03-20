@@ -1,0 +1,7 @@
+.app {
+  width: 1210px;
+  max-width: 100%;
+  min-height: 400px;
+  border: 5px solid var(--color-darkgray);
+  background-color: var(--color-lightgray);
+}

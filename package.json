@@ -3,8 +3,7 @@
   "browser": "./src/index.js",
   "browserslist": [
     "last 2 versions",
-    "not Edge <= 18",
-    "ie 11"
+    "not Edge <= 18"
   ],
   "dependencies": {
     "@babel/core": "7.9.0",

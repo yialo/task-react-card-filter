@@ -1,2 +1,6 @@
 import '@csstools/normalize.css';
-import './css/_index.css';
+
+import './css/index.css';
+import init from './init-react-app.js';
+
+init();

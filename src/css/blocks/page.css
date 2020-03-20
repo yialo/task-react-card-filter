@@ -1,0 +1,6 @@
+.page {
+  display: flex;
+  justify-content: center;
+  padding-top: 32px;
+  padding-bottom: 32px;
+}

@@ -5,6 +5,15 @@
 }
 
 html {
+  --color-black: #101010;
+  --color-darkblue: #151b3d;
+  --color-darkgray: #272727;
+  --color-lightgray: #fafbfd;
+  --color-gray-1: #c5c7dc;
+  --color-gray-2: #a8a8a8;
+  --color-gray-3: #eaecf5;
+  --color-white: #ffffff;
+
   box-sizing: border-box;
 }
 
@@ -15,8 +24,8 @@ body {
   font-size: 16px;
   line-height: 1;
   font-family: "Source Sans Pro", "Arial", sans-serif;
-  color: black;
-  background-color: white;
+  color: var(--color-black);
+  background-color: var(--color-white);
 }
 
 img,
