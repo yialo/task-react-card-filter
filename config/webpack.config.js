@@ -59,18 +59,18 @@ module.exports = (env = {}) => {
     context: Path.SRC,
 
     devServer: (() => {
-      const config = {};
+      const devServerConfig = {};
       if (isDevelopment) {
-        Object.assign(config, {
+        Object.assign(devServerConfig, {
           host: process.env.WDS_HOST,
           port: process.env.WDS_PORT,
           hot: false,
           inline: true,
           overlay: true,
-          writeToDisk: true,
+          writeToDisk: false,
         });
       }
-      return config;
+      return devServerConfig;
     })(),
 
     devtool: isDevelopment ? 'eval-source-map' : false,
@@ -148,7 +148,7 @@ module.exports = (env = {}) => {
     },
 
     optimization: (() => {
-      const config = {
+      const optimizationConfig = {
         noEmitOnErrors: true,
         splitChunks: {
           chunks: 'all',
@@ -165,7 +165,7 @@ module.exports = (env = {}) => {
       };
 
       if (isProduction) {
-        config.minimizer = [
+        optimizationConfig.minimizer = [
           new TerserPlugin({
             extractComments: false,
             terserOptions: {
@@ -198,7 +198,7 @@ module.exports = (env = {}) => {
           }),
         ];
       }
-      return config;
+      return optimizationConfig;
     })(),
 
     output: {
