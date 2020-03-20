@@ -11,7 +11,7 @@ const HtmlPlugin = require('html-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const { DefinePlugin, ProgressPlugin } = require('webpack');
+const { ProgressPlugin } = require('webpack');
 
 module.exports = (env = {}) => {
   const {
@@ -29,10 +29,13 @@ module.exports = (env = {}) => {
   const assetHash = isProduction ? '.[contenthash]' : '';
   const publicPath = isProduction ? 'https://yialo.github.io/task-react-card-filter/' : '/';
 
-  const rootPath = path.resolve(__dirname, '../');
+  const rootPath = path.join(__dirname, '../');
   const configPath = path.join(rootPath, 'config');
   const distPath = path.join(rootPath, needDeploy ? 'docs' : 'dist');
   const srcPath = path.join(rootPath, 'src');
+
+  console.log(rootPath);
+  console.log(configPath);
 
   const Path = {
     CONFIG: configPath,
@@ -64,7 +67,7 @@ module.exports = (env = {}) => {
           hot: false,
           inline: true,
           overlay: true,
-          writeToDisk: (filePath) => !filePath.match(/\.hot-update\.js(?:on|\.map)?$/),
+          writeToDisk: true,
         });
       }
       return config;
@@ -201,7 +204,7 @@ module.exports = (env = {}) => {
     output: {
       filename: `assets/js/[name]${assetHash}.js`,
       path: Path.DIST,
-      // publicPath,
+      publicPath,
     },
 
     plugins: (() => {
@@ -209,9 +212,6 @@ module.exports = (env = {}) => {
         new CaseSensitivePathsPlugin(),
         new CleanWebpackPlugin({
           cleanStaleWebpackAssets: false,
-        }),
-        new DefinePlugin({
-          'publicPath': JSON.stringify(publicPath),
         }),
         new ProgressPlugin(),
         new CssExtractPlugin({
