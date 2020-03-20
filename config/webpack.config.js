@@ -210,9 +210,7 @@ module.exports = (env = {}) => {
     plugins: (() => {
       const pluginList = [
         new CaseSensitivePathsPlugin(),
-        new CleanWebpackPlugin({
-          cleanStaleWebpackAssets: false,
-        }),
+        new CleanWebpackPlugin(),
         new ProgressPlugin(),
         new CssExtractPlugin({
           filename: `assets/css/[name]${assetHash}.css`,
