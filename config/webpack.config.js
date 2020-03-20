@@ -61,7 +61,7 @@ module.exports = (env = {}) => {
         Object.assign(config, {
           host: process.env.WDS_HOST,
           port: process.env.WDS_PORT,
-          hot: true,
+          hot: false,
           inline: true,
           overlay: true,
           writeToDisk: (filePath) => !filePath.match(/\.hot-update\.js(?:on|\.map)?$/),
@@ -91,21 +91,7 @@ module.exports = (env = {}) => {
         const styleLoaderRule = {
           test: /\.css$/,
           use: [
-            // isProduction ? ({
-            //   loader: CssExtractPlugin.loader,
-            //   options: {
-            //     hmr: true,
-            //     reloadAll: true,
-            //   },
-            // }) : 'style-loader',
-            {
-              loader: CssExtractPlugin.loader,
-              options: {
-                hmr: true,
-                reloadAll: true,
-                publicPath: '/',
-              },
-            },
+            isProduction ? CssExtractPlugin.loader : 'style-loader',
             {
               loader: 'css-loader',
               options: {
@@ -215,7 +201,7 @@ module.exports = (env = {}) => {
     output: {
       filename: `assets/js/[name]${assetHash}.js`,
       path: Path.DIST,
-      publicPath,
+      // publicPath,
     },
 
     plugins: (() => {
