@@ -2,11 +2,12 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import Input from '../Input/index.jsx';
+import Card from '../Card/index.jsx';
 
 function App(props) {
   return (
     <div className="app">
-      <div className="app__header">
+      <form className="app__searchbar" role="search">
         <Input
           outerClassName="app__filter"
           placeholder="Номер заявки"
@@ -21,8 +22,8 @@ function App(props) {
             console.log('Changed!');
           }}
         />
-      </div>
-      <div className="app__body"></div>
+      </form>
+      <Card />
     </div>
   );
 }
