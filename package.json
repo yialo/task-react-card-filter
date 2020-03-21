@@ -82,7 +82,7 @@
     "prod": "npm run webpack -- --env.purpose=production",
     "prod:analyze": "npm run prod -- --env.analyze",
     "prod:stats": "webpack --config ./config/webpack.config.js --env.purpose=production --profile --json > ./tests/webpack-bundle-stats.json",
-    "start": "npm run nodemon:dev",
+    "start": "npm run dev",
     "test": "jest",
     "webpack": "webpack --config ./config/webpack.config.js",
     "webpack-dev-server": "webpack-dev-server --config ./config/webpack.config.js"
