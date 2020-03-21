@@ -1,28 +1,27 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 
-import Input from '../Input/index.jsx';
+import InputWithClassList from '../Input/WithClassList.jsx';
 import Card from '../Card/index.jsx';
 
-function App(props) {
+function App() {
   return (
     <div className="app">
-      <form className="app__searchbar" role="search">
-        <Input
-          outerClassName="app__filter"
+      <div className="app__searchbar" role="search">
+        <InputWithClassList
+          label="Введите номер заявки"
           placeholder="Номер заявки"
           onChange={() => {
             console.log('Changed!');
           }}
         />
-        <Input
-          outerClassName="app__filter"
+        <InputWithClassList
+          label="Укажите наименование клиента"
           placeholder="Наименование клиента"
           onChange={() => {
             console.log('Changed!');
           }}
         />
-      </form>
+      </div>
       <Card />
     </div>
   );

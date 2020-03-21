@@ -15,3 +15,9 @@
 .app__searchbar {
   grid-area: 1 / 1 / 2 / -1;
 }
+
+.app__filter {
+  &:first-child {
+    margin-right: 16px;
+  }
+}

@@ -1,0 +1,21 @@
+.search-field__input {
+  --base-shadow: 0 0 1px 1px var(--color-gray-4);
+
+  padding: 12px;
+  border-style: none;
+  border-radius: 10px;
+  font-size: 12px;
+  background-color: var(--color-white);
+  box-shadow: var(--base-shadow);
+
+  &:focus {
+    outline-style: none;
+    box-shadow:
+      0 0 1px 2px var(--color-gray-2),
+      var(--base-shadow);
+
+    &::placeholder {
+      visibility: hidden;
+    }
+  }
+}

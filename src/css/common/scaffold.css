@@ -1,18 +1,3 @@
-.s_button {
-  padding: 8px 16px;
-  border-style: none;
-  font-size: inherit;
-  background-color: #cdcdcd;
-}
-
-.s_input {
-  padding: 8px;
-  border: 1px solid #bababa;
-  border-radius: 2px;
-  font-size: inherit;
-  background-color: white;
-}
-
 .s_visually-hidden {
   &:not(:active, :focus),
   &:matches(input[type="checkbox"]),
