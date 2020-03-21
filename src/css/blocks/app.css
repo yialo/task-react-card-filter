@@ -14,10 +14,11 @@
 
 .app__searchbar {
   grid-area: 1 / 1 / 2 / -1;
+  display: flex;
 }
 
 .app__filter {
-  &:first-child {
+  &:not(:last-child) {
     margin-right: 16px;
   }
 }
