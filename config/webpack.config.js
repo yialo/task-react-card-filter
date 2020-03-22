@@ -12,7 +12,7 @@ const HtmlPlugin = require('html-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const { CleanWebpackPlugin: CleanPlugin } = require('clean-webpack-plugin');
-const { ProgressPlugin } = require('webpack');
+const { DefinePlugin, ProgressPlugin } = require('webpack');
 
 module.exports = (env = {}) => {
   const {
@@ -28,7 +28,6 @@ module.exports = (env = {}) => {
   const isProduction = (purpose === 'production');
 
   const assetHash = isProduction ? '.[contenthash]' : '';
-  const publicPath = isProduction ? 'https://yialo.github.io/task-react-card-filter/' : '/';
 
   const rootPath = path.join(__dirname, '../');
   const configPath = path.join(rootPath, 'config');
@@ -53,6 +52,7 @@ module.exports = (env = {}) => {
   };
 
   dotEnv.config({ path: Path.LOCAL_ENV_FILE });
+  const publicPath = needDeploy ? process.env.DEPLOY_PUBLIC_URL : '/';
 
   return {
     context: Path.SRC,
@@ -210,6 +210,9 @@ module.exports = (env = {}) => {
       const pluginList = [
         new CaseSensitivePathsPlugin(),
         new CleanPlugin(),
+        new DefinePlugin({
+          'process.env.PUBLIC_PATH': JSON.stringify(publicPath),
+        }),
         new ProgressPlugin(),
         new CssExtractPlugin({
           filename: `assets/css/[name]${assetHash}.css`,

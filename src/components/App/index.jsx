@@ -24,7 +24,7 @@ function App(props) {
   } = props;
 
   useEffect(() => {
-    axios.get('/json/clients.json')
+    axios.get(`${process.env.PUBLIC_PATH}json/clients.json`)
       .then((request) => {
         onDataLoaded(request.data.list);
       })
