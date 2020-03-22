@@ -12,8 +12,10 @@
 .tag-list__item {
   margin-top: var(--top-shift);
   margin-left: var(--left-shift);
+  overflow: hidden;
   padding: 8px;
   border-radius: 12px;
+  text-overflow: ellipsis;
   text-transform: uppercase;
   white-space: nowrap;
   color: var(--color-white);

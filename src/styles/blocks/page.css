@@ -1,6 +1,7 @@
 .page {
   display: flex;
   justify-content: center;
+  min-width: 320px;
   padding-top: 32px;
   padding-bottom: 32px;
 }

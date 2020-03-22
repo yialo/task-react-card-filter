@@ -11,7 +11,8 @@ import withClassList from '@/hocs/withClassList.jsx';
 import clientData from '@/static/clients.json';
 
 const AppCard = withClassList(Card, ['app__card']);
-const AppFilter = withClassList(SearchField, ['app__filter']);
+const AppFilterForNumber = withClassList(SearchField, ['app__filter', 'app__filter--number']);
+const AppFilterForName = withClassList(SearchField, ['app__filter', 'app__filter--name']);
 
 const INITIAL_CLIENT_LIST = clientData.list;
 
@@ -19,12 +20,12 @@ function App(props) {
   return (
     <div className="app">
       <div className="app__searchbar" role="search">
-        <AppFilter
+        <AppFilterForNumber
           label="Введите номер заявки"
           placeholder="Номер заявки"
           onChange={props.onFilterByNumber}
         />
-        <AppFilter
+        <AppFilterForName
           label="Укажите наименование клиента"
           placeholder="Наименование клиента"
           onChange={props.onFilterByName}
