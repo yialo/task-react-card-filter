@@ -42,6 +42,7 @@ function Card(props) {
             setIsChecked((prevState) => !prevState);
           }}
         />
+        <span className="card__checkbox" aria-hidden="true" />
       </label>
       <p className="s_regular-text card__sum">{sum}</p>
       <p className="s_regular-text card__organization">{organization}</p>
