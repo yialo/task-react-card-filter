@@ -66,7 +66,7 @@ module.exports = (env = {}) => {
           hot: false,
           inline: true,
           overlay: true,
-          writeToDisk: true,
+          writeToDisk: false,
         });
       }
       return devServerConfig;
