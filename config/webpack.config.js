@@ -7,10 +7,11 @@ const dotEnv = require('dotenv');
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 const CssExtractPlugin = require('mini-css-extract-plugin');
 const CssOptimizationPlugin = require('optimize-css-assets-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 const HtmlPlugin = require('html-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const { CleanWebpackPlugin: CleanPlugin } = require('clean-webpack-plugin');
 const { DefinePlugin, ProgressPlugin } = require('webpack');
 
 module.exports = (env = {}) => {
@@ -25,63 +26,57 @@ module.exports = (env = {}) => {
 
   const isDevelopment = (purpose === 'development');
   const isProduction = (purpose === 'production');
-  const isTest = (purpose === 'test');
 
   const assetHash = isProduction ? '.[contenthash]' : '';
-  const publicPath = isProduction ? 'https://yialo.github.io/task-react-card-filter/' : '/';
 
-  const rootPath = path.resolve(__dirname, '../');
+  const rootPath = path.join(__dirname, '../');
   const configPath = path.join(rootPath, 'config');
   const distPath = path.join(rootPath, needDeploy ? 'docs' : 'dist');
   const srcPath = path.join(rootPath, 'src');
+  const staticPath = path.join(srcPath, 'static');
 
-  const pathEnum = {
+  const Path = {
     CONFIG: configPath,
     DIST: distPath,
     SRC: srcPath,
+    STATIC: staticPath,
     ROOT: rootPath,
     BABEL_CONFIG: path.join(configPath, 'babel.config.js'),
-    HTML_TEMPLATE: path.join(srcPath, 'index.html'),
+    HTML_TEMPLATE: path.join(srcPath, 'index.ejs'),
+    JSON_OUTPUT: path.join(distPath, 'json'),
     LOCAL_ENV_FILE: path.join(rootPath, '.env.local'),
-    TEST_INPUT: path.join(srcPath, 'tests.js'),
-    TEST_OUTPUT: path.join(rootPath, 'tests'),
   };
 
   const aliasEnum = {
     '@': srcPath,
   };
 
-  dotEnv.config({ path: pathEnum.LOCAL_ENV_FILE });
+  dotEnv.config({ path: Path.LOCAL_ENV_FILE });
+  const publicPath = needDeploy ? process.env.DEPLOY_PUBLIC_URL : '/';
 
   return {
-    context: pathEnum.SRC,
+    context: Path.SRC,
 
     devServer: (() => {
+      const devServerConfig = {};
       if (isDevelopment) {
-        return {
+        Object.assign(devServerConfig, {
           host: process.env.WDS_HOST,
           port: process.env.WDS_PORT,
-          hot: true,
+          hot: false,
           inline: true,
           overlay: true,
-          writeToDisk: (filePath) => !filePath.match(/\.hot-update\.js(?:on|\.map)?$/),
-        };
+          writeToDisk: true,
+        });
       }
-
-      return {};
+      return devServerConfig;
     })(),
 
     devtool: isDevelopment ? 'eval-source-map' : false,
 
-    entry: (() => {
-      if (isTest) {
-        return pathEnum.TEST_INPUT;
-      }
-
-      return {
-        'app': pathEnum.SRC,
-      };
-    })(),
+    entry: {
+      'app': Path.SRC,
+    },
 
     mode: (isDevelopment || isProduction) ? purpose : 'none',
 
@@ -89,16 +84,42 @@ module.exports = (env = {}) => {
       rules: (() => {
         const scriptLoaderRule = {
           test: /\.jsx?$/,
-          exclude: '/node_modules/',
           loader: 'babel-loader',
           options: {
-            configFile: pathEnum.BABEL_CONFIG,
+            configFile: Path.BABEL_CONFIG,
           },
         };
 
-        if (isTest) {
-          return [scriptLoaderRule];
-        }
+        const styleLoaderRule = {
+          test: /\.css$/,
+          use: [
+            isProduction ? CssExtractPlugin.loader : 'style-loader',
+            {
+              loader: 'css-loader',
+              options: {
+                sourceMap: true,
+                importLoaders: 1,
+              },
+            },
+            {
+              loader: 'postcss-loader',
+              options: {
+                sourceMap: true,
+                config: {
+                  ctx: {
+                    pathAliasEnum: aliasEnum,
+                  },
+                  path: Path.CONFIG,
+                },
+              },
+            },
+          ],
+        };
+
+        const templateLoader = {
+          test: /\.ejs$/,
+          loader: 'ejs-loader',
+        };
 
         const getFileLoaderRule = ({ testRegexp, outputSubdir }) => ({
           test: testRegexp,
@@ -111,32 +132,8 @@ module.exports = (env = {}) => {
 
         return [
           scriptLoaderRule,
-          {
-            test: /\.css$/,
-            exclude: '/node_modules/',
-            use: [
-              (isProduction ? CssExtractPlugin.loader : 'style-loader'),
-              {
-                loader: 'css-loader',
-                options: {
-                  sourceMap: true,
-                  importLoaders: 1,
-                },
-              },
-              {
-                loader: 'postcss-loader',
-                options: {
-                  sourceMap: true,
-                  config: {
-                    ctx: {
-                      pathAliasEnum: aliasEnum,
-                    },
-                    path: pathEnum.CONFIG,
-                  },
-                },
-              },
-            ],
-          },
+          styleLoaderRule,
+          templateLoader,
           getFileLoaderRule({
             testRegexp: /\.(jpe?g|png|svg)$/,
             outputSubdir: 'img',
@@ -150,12 +147,9 @@ module.exports = (env = {}) => {
     },
 
     optimization: (() => {
-      const output = {
+      const optimizationConfig = {
         noEmitOnErrors: true,
-      };
-
-      if (!isTest) {
-        output.splitChunks = {
+        splitChunks: {
           chunks: 'all',
           minChunks: 2,
           cacheGroups: {
@@ -166,11 +160,11 @@ module.exports = (env = {}) => {
               enforce: true,
             },
           },
-        };
-      }
+        },
+      };
 
       if (isProduction) {
-        output.minimizer = [
+        optimizationConfig.minimizer = [
           new TerserPlugin({
             extractComments: false,
             terserOptions: {
@@ -203,57 +197,45 @@ module.exports = (env = {}) => {
           }),
         ];
       }
-
-      return output;
+      return optimizationConfig;
     })(),
 
-    output: (() => {
-      if (isTest) {
-        return {
-          filename: 'test_output.js',
-          path: pathEnum.TEST_OUTPUT,
-        };
-      }
-
-      return {
-        filename: `assets/js/[name]${assetHash}.js`,
-        path: pathEnum.DIST,
-        publicPath,
-      };
-    })(),
+    output: {
+      filename: `assets/js/[name]${assetHash}.js`,
+      path: Path.DIST,
+      publicPath,
+    },
 
     plugins: (() => {
-      const output = [
+      const pluginList = [
         new CaseSensitivePathsPlugin(),
-        new CleanWebpackPlugin({
-          cleanStaleWebpackAssets: false,
-        }),
+        new CleanPlugin(),
         new DefinePlugin({
-          'publicPath': JSON.stringify(publicPath),
+          'process.env.PUBLIC_PATH': JSON.stringify(publicPath),
         }),
         new ProgressPlugin(),
+        new CssExtractPlugin({
+          filename: `assets/css/[name]${assetHash}.css`,
+        }),
+        new HtmlPlugin({
+          filename: 'index.html',
+          template: Path.HTML_TEMPLATE,
+        }),
+        new CopyPlugin([
+          {
+            from: Path.STATIC,
+            to: Path.JSON_OUTPUT,
+            test: /\.json$/,
+          },
+        ]),
       ];
 
-      if (!isTest) {
-        const mainPlugins = [
-          new CssExtractPlugin({
-            filename: `assets/css/[name]${assetHash}.css`,
-          }),
-          new HtmlPlugin({
-            filename: 'index.html',
-            template: pathEnum.HTML_TEMPLATE,
-          }),
-        ];
-        output.push(...mainPlugins);
-      }
-
       if (needAnalyze) {
-        output.push(new BundleAnalyzerPlugin({
+        pluginList.push(new BundleAnalyzerPlugin({
           analyzerPort: 8889,
         }));
       }
-
-      return output;
+      return pluginList;
     })(),
 
     resolve: {
