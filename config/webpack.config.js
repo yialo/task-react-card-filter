@@ -34,9 +34,6 @@ module.exports = (env = {}) => {
   const distPath = path.join(rootPath, needDeploy ? 'docs' : 'dist');
   const srcPath = path.join(rootPath, 'src');
 
-  console.log(rootPath);
-  console.log(configPath);
-
   const Path = {
     CONFIG: configPath,
     DIST: distPath,
