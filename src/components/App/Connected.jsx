@@ -5,7 +5,7 @@ import ActionCreator from '@/store/action-creator.js';
 
 const mapStateToProps = (state, ownProps) => ({
   ...ownProps,
-  clientList: state.clientList,
+  clientList: state.filteredList,
   isNetworkError: state.isNetworkError,
 });
 
@@ -13,8 +13,12 @@ const mapDispatchToProps = (dispatch) => ({
   onDataLoaded: (list) => {
     dispatch(ActionCreator.fetchClientList(list));
   },
-  onFilterByNumber: (numberValue) => {},
-  onFilterByName: (nameValue) => {},
+  onFilterByName: (nameValue) => {
+    dispatch(ActionCreator.filterClientList('name', nameValue));
+  },
+  onFilterByNumber: (numberValue) => {
+    dispatch(ActionCreator.filterClientList('number', numberValue));
+  },
   onNetworkError: () => {
     dispatch(ActionCreator.throwFetchError());
   },

@@ -34,18 +34,24 @@ function App(props) {
       });
   }, []);
 
+  const getFilterHandler = (callback) => (
+    (evt) => {
+      callback(evt.target.value);
+    }
+  );
+
   return (
     <div className="app">
       <div className="app__searchbar" role="search">
         <AppFilterForNumber
           label="Введите номер заявки"
           placeholder="Номер заявки"
-          onChange={onFilterByNumber}
+          onChange={getFilterHandler(onFilterByNumber)}
         />
         <AppFilterForName
           label="Укажите наименование клиента"
           placeholder="Наименование клиента"
-          onChange={onFilterByName}
+          onChange={getFilterHandler(onFilterByName)}
         />
       </div>
       {
