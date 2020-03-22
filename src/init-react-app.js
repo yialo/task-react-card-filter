@@ -1,7 +1,7 @@
 import { createElement } from 'react';
 import { render } from 'react-dom';
 
-import App from './components/App/index.jsx';
+import App from './components/App/Provider.jsx';
 
 const initReactApp = () => {
   const app = createElement(App);

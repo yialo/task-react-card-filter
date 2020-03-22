@@ -7,10 +7,11 @@ const dotEnv = require('dotenv');
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 const CssExtractPlugin = require('mini-css-extract-plugin');
 const CssOptimizationPlugin = require('optimize-css-assets-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 const HtmlPlugin = require('html-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const { CleanWebpackPlugin: CleanPlugin } = require('clean-webpack-plugin');
 const { ProgressPlugin } = require('webpack');
 
 module.exports = (env = {}) => {
@@ -33,17 +34,18 @@ module.exports = (env = {}) => {
   const configPath = path.join(rootPath, 'config');
   const distPath = path.join(rootPath, needDeploy ? 'docs' : 'dist');
   const srcPath = path.join(rootPath, 'src');
+  const staticPath = path.join(srcPath, 'static');
 
   const Path = {
     CONFIG: configPath,
     DIST: distPath,
     SRC: srcPath,
+    STATIC: staticPath,
     ROOT: rootPath,
     BABEL_CONFIG: path.join(configPath, 'babel.config.js'),
     HTML_TEMPLATE: path.join(srcPath, 'index.ejs'),
+    JSON_OUTPUT: path.join(distPath, 'json'),
     LOCAL_ENV_FILE: path.join(rootPath, '.env.local'),
-    TEST_INPUT: path.join(srcPath, 'tests.js'),
-    TEST_OUTPUT: path.join(rootPath, 'tests'),
   };
 
   const aliasEnum = {
@@ -64,7 +66,7 @@ module.exports = (env = {}) => {
           hot: false,
           inline: true,
           overlay: true,
-          writeToDisk: false,
+          writeToDisk: true,
         });
       }
       return devServerConfig;
@@ -207,7 +209,7 @@ module.exports = (env = {}) => {
     plugins: (() => {
       const pluginList = [
         new CaseSensitivePathsPlugin(),
-        new CleanWebpackPlugin(),
+        new CleanPlugin(),
         new ProgressPlugin(),
         new CssExtractPlugin({
           filename: `assets/css/[name]${assetHash}.css`,
@@ -216,6 +218,13 @@ module.exports = (env = {}) => {
           filename: 'index.html',
           template: Path.HTML_TEMPLATE,
         }),
+        new CopyPlugin([
+          {
+            from: Path.STATIC,
+            to: Path.JSON_OUTPUT,
+            test: /\.json$/,
+          },
+        ]),
       ];
 
       if (needAnalyze) {
