@@ -10,7 +10,7 @@
 
 ## Compile with minification
 
-    npm run build
+    npm run prod
 
 ## Lint styles
 
@@ -23,7 +23,3 @@
 ## Lint styles & scripts
 
     npm run lint
-
-## Run Jest tests
-
-    npm test
