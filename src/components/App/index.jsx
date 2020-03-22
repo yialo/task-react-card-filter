@@ -3,7 +3,7 @@ import './index.css';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import Card from '../Card/index.jsx';
+import Card from '../Card/WithLocalState.jsx';
 import SearchField from '../SearchField/index.jsx';
 
 import withClassList from '@/hocs/withClassList.jsx';

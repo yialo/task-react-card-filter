@@ -1,7 +1,7 @@
 import './index.css';
 
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import React from 'react';
 
 import TagList from '../TagList/index.jsx';
 
@@ -21,13 +21,11 @@ function Card(props) {
     bottomTagList,
   } = props.dto;
 
-  const [isChecked, setIsChecked] = useState(false);
-
   return (
     <article
       className={
         ['card'].concat(props.classList)
-          .concat(isChecked ? 'js_checked' : [])
+          .concat(props.isChecked ? 'js_checked' : [])
           .join(' ')
       }
     >
@@ -36,11 +34,9 @@ function Card(props) {
         <input
           className="s_visually-hidden"
           type="checkbox"
-          checked={isChecked}
+          checked={props.isChecked}
           name="need_client_check"
-          onChange={() => {
-            setIsChecked((prevState) => !prevState);
-          }}
+          onChange={props.onCheck}
         />
         <span className="card__checkbox" aria-hidden="true" />
       </label>
@@ -69,6 +65,8 @@ Card.propTypes = {
     PropTypes.number,
     PropTypes.arrayOf(PropTypes.string),
   ])).isRequired,
+  isChecked: PropTypes.bool.isRequired,
+  onCheck: PropTypes.func.isRequired,
 };
 
 export default Card;
