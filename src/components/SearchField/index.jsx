@@ -1,7 +1,9 @@
+import './index.css';
+
 import PropTypes from 'prop-types';
 import React from 'react';
 
-function Input(props) {
+function SearchField(props) {
   return (
     <label
       className={['search-field'].concat(props.classList).join(' ')}
@@ -18,15 +20,15 @@ function Input(props) {
   );
 }
 
-Input.defaultProps = {
+SearchField.defaultProps = {
   classList: [],
 };
 
-Input.propTypes = {
+SearchField.propTypes = {
   classList: PropTypes.arrayOf(PropTypes.string),
   label: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
 };
 
-export default Input;
+export default SearchField;

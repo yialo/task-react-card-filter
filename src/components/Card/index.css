@@ -1,0 +1,80 @@
+* {
+  @nest
+  .card > & {
+    padding-left: var(--padding);
+    padding-right: var(--padding);
+  }
+}
+
+.card {
+  --padding: 16px;
+
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  padding-top: var(--padding);
+  padding-bottom: var(--padding);
+  background-color: var(--color-white);
+  box-shadow: 1px 2px 10px 0 var(--color-gray-1);
+}
+
+.card__check-line {
+  display: flex;
+  margin-bottom: 12px;
+  cursor: pointer;
+
+  &::after {
+    content: "";
+    flex-shrink: 0;
+    margin-left: 16px;
+    width: 16px;
+    height: 16px;
+    border: 1px solid var(--color-gray-2);
+    border-radius: 2px;
+
+    @nest
+    .js_checked & {
+      background-color: red;
+    }
+  }
+}
+
+.card__tip {
+  flex-grow: 1;
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--color-darkblue);
+}
+
+.card__name {
+  margin-top: 0;
+  margin-bottom: 12px;
+  padding-top: 16px;
+  padding-bottom: 16px;
+  background-color: var(--color-gray-3);
+}
+
+.card__taglist {
+  margin-bottom: 16px;
+}
+
+.card__footer {
+  margin-top: auto;
+  display: flex;
+}
+
+.card__sum {
+  margin-bottom: 16px;
+}
+
+.card__organization {
+  margin-bottom: 10px;
+}
+
+.card__ptrn {
+  margin-bottom: 10px;
+}
+
+.card__id {
+  margin-right: 16px;
+}

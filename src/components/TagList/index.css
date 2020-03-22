@@ -1,0 +1,21 @@
+.tag-list {
+  --top-shift: 6px;
+  --left-shift: 8px;
+
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: calc(var(--top-shift) * -1);
+  margin-left: calc(var(--left-shift) * -1);
+  font-size: 10px;
+}
+
+.tag-list__item {
+  margin-top: var(--top-shift);
+  margin-left: var(--left-shift);
+  padding: 8px;
+  border-radius: 12px;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--color-white);
+  background-color: var(--color-gray-1);
+}
