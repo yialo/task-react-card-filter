@@ -7,11 +7,12 @@ const dotEnv = require('dotenv');
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 const CssExtractPlugin = require('mini-css-extract-plugin');
 const CssOptimizationPlugin = require('optimize-css-assets-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 const HtmlPlugin = require('html-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const { ProgressPlugin } = require('webpack');
+const { CleanWebpackPlugin: CleanPlugin } = require('clean-webpack-plugin');
+const { DefinePlugin, ProgressPlugin } = require('webpack');
 
 module.exports = (env = {}) => {
   const {
@@ -27,26 +28,23 @@ module.exports = (env = {}) => {
   const isProduction = (purpose === 'production');
 
   const assetHash = isProduction ? '.[contenthash]' : '';
-  const publicPath = isProduction ? 'https://yialo.github.io/task-react-card-filter/' : '/';
 
   const rootPath = path.join(__dirname, '../');
   const configPath = path.join(rootPath, 'config');
   const distPath = path.join(rootPath, needDeploy ? 'docs' : 'dist');
   const srcPath = path.join(rootPath, 'src');
-
-  console.log(rootPath);
-  console.log(configPath);
+  const staticPath = path.join(srcPath, 'static');
 
   const Path = {
     CONFIG: configPath,
     DIST: distPath,
     SRC: srcPath,
+    STATIC: staticPath,
     ROOT: rootPath,
     BABEL_CONFIG: path.join(configPath, 'babel.config.js'),
     HTML_TEMPLATE: path.join(srcPath, 'index.ejs'),
+    JSON_OUTPUT: path.join(distPath, 'json'),
     LOCAL_ENV_FILE: path.join(rootPath, '.env.local'),
-    TEST_INPUT: path.join(srcPath, 'tests.js'),
-    TEST_OUTPUT: path.join(rootPath, 'tests'),
   };
 
   const aliasEnum = {
@@ -54,14 +52,15 @@ module.exports = (env = {}) => {
   };
 
   dotEnv.config({ path: Path.LOCAL_ENV_FILE });
+  const publicPath = needDeploy ? process.env.DEPLOY_PUBLIC_URL : '/';
 
   return {
     context: Path.SRC,
 
     devServer: (() => {
-      const config = {};
+      const devServerConfig = {};
       if (isDevelopment) {
-        Object.assign(config, {
+        Object.assign(devServerConfig, {
           host: process.env.WDS_HOST,
           port: process.env.WDS_PORT,
           hot: false,
@@ -70,7 +69,7 @@ module.exports = (env = {}) => {
           writeToDisk: true,
         });
       }
-      return config;
+      return devServerConfig;
     })(),
 
     devtool: isDevelopment ? 'eval-source-map' : false,
@@ -148,7 +147,7 @@ module.exports = (env = {}) => {
     },
 
     optimization: (() => {
-      const config = {
+      const optimizationConfig = {
         noEmitOnErrors: true,
         splitChunks: {
           chunks: 'all',
@@ -165,7 +164,7 @@ module.exports = (env = {}) => {
       };
 
       if (isProduction) {
-        config.minimizer = [
+        optimizationConfig.minimizer = [
           new TerserPlugin({
             extractComments: false,
             terserOptions: {
@@ -198,7 +197,7 @@ module.exports = (env = {}) => {
           }),
         ];
       }
-      return config;
+      return optimizationConfig;
     })(),
 
     output: {
@@ -210,8 +209,9 @@ module.exports = (env = {}) => {
     plugins: (() => {
       const pluginList = [
         new CaseSensitivePathsPlugin(),
-        new CleanWebpackPlugin({
-          cleanStaleWebpackAssets: false,
+        new CleanPlugin(),
+        new DefinePlugin({
+          'process.env.PUBLIC_PATH': JSON.stringify(publicPath),
         }),
         new ProgressPlugin(),
         new CssExtractPlugin({
@@ -221,6 +221,13 @@ module.exports = (env = {}) => {
           filename: 'index.html',
           template: Path.HTML_TEMPLATE,
         }),
+        new CopyPlugin([
+          {
+            from: Path.STATIC,
+            to: Path.JSON_OUTPUT,
+            test: /\.json$/,
+          },
+        ]),
       ];
 
       if (needAnalyze) {
