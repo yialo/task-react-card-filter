@@ -1,2 +1,4 @@
-@custom-media --md-from (width >= 768px);
+@custom-media --xs-from (width >= 576px);
+@custom-media --sm-from (width >= 768px);
+@custom-media --md-from (width >= 992px);
 @custom-media --lg-from (width >= 1230px);
