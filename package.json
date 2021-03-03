@@ -1,6 +1,24 @@
 {
-  "author": "Aleksei Arro <aleksey.arro@phystech.edu>",
-  "browser": "./src/index.js",
+  "name": "task_react-card-filter",
+  "private": true,
+  "scripts": {
+    "build": "npm run prod -- --env.deploy",
+    "check-types": "tsc --project ./config/tsconfig.json",
+    "dev": "npm run webpack-dev-server -- --env.purpose=development",
+    "lint": "npm run lint:scripts && npm run lint:styles",
+    "lint:scripts": "eslint ./config/**/*.js ./src/**/*.{j,t}s?(x)",
+    "lint:styles": "stylelint ./src/**/*.css",
+    "nodemon": "nodemon --config ./config/nodemon.json",
+    "nodemon:dev": "npm run nodemon -- dev",
+    "nodemon:prod": "npm run nodemon -- prod",
+    "prod": "npm run webpack -- --env.purpose=production",
+    "prod:analyze": "npm run prod -- --env.analyze",
+    "prod:stats": "webpack --config ./config/webpack.config.js --env.purpose=production --profile --json > ./tests/webpack-bundle-stats.json",
+    "start": "npm run dev",
+    "test": "jest",
+    "webpack": "webpack --config ./config/webpack.config.js",
+    "webpack-dev-server": "webpack-dev-server --config ./config/webpack.config.js"
+  },
   "browserslist": [
     "last 2 versions",
     "not Edge <= 18"
@@ -43,7 +61,6 @@
     "webpack-cli": "3.3.11",
     "webpack-manifest-plugin": "2.2.0"
   },
-  "description": "A simple React challenge",
   "devDependencies": {
     "babel-eslint": "10.1.0",
     "eslint": "6.8.0",
@@ -62,31 +79,8 @@
   "engines": {
     "node": "12"
   },
-  "homepage": "https://github.com/yialo/task-react-card-filter#readme",
-  "license": "MIT",
-  "name": "task-react-card-filter",
-  "private": true,
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/yialo/task-react-card-filter"
-  },
-  "scripts": {
-    "build": "npm run prod -- --env.deploy",
-    "check-types": "tsc --project ./config/tsconfig.json",
-    "dev": "npm run webpack-dev-server -- --env.purpose=development",
-    "lint": "npm run lint:scripts && npm run lint:styles",
-    "lint:scripts": "eslint ./config/**/*.js ./src/**/*.{j,t}s?(x)",
-    "lint:styles": "stylelint ./src/**/*.css",
-    "nodemon": "nodemon --config ./config/nodemon.json",
-    "nodemon:dev": "npm run nodemon -- dev",
-    "nodemon:prod": "npm run nodemon -- prod",
-    "prod": "npm run webpack -- --env.purpose=production",
-    "prod:analyze": "npm run prod -- --env.analyze",
-    "prod:stats": "webpack --config ./config/webpack.config.js --env.purpose=production --profile --json > ./tests/webpack-bundle-stats.json",
-    "start": "npm run dev",
-    "test": "jest",
-    "webpack": "webpack --config ./config/webpack.config.js",
-    "webpack-dev-server": "webpack-dev-server --config ./config/webpack.config.js"
-  },
-  "version": "0.1.4"
+    "url": "git+https://github.com/yialo/task_react-card-filter"
+  }
 }

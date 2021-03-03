@@ -1,5 +1,7 @@
 # Task: React card filter
 
+A simple React challenge
+
 ## Install project
 
     npm install
