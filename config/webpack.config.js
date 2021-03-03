@@ -44,14 +44,13 @@ module.exports = (env = {}) => {
     BABEL_CONFIG: path.join(configPath, 'babel.config.js'),
     HTML_TEMPLATE: path.join(srcPath, 'index.ejs'),
     JSON_OUTPUT: path.join(distPath, 'json'),
-    LOCAL_ENV_FILE: path.join(rootPath, '.env.local'),
   };
 
   const aliasEnum = {
     '@': srcPath,
   };
 
-  dotEnv.config({ path: Path.LOCAL_ENV_FILE });
+  dotEnv.config();
   const publicPath = needDeploy ? process.env.DEPLOY_PUBLIC_URL : '/';
 
   return {
